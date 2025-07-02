@@ -878,12 +878,201 @@ const GradeCalculator = () => {
             </table>
           </div>
         </div>
+
+        {/* Edit Grade Modal/Popup */}
+        {editingGrade && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl p-6 shadow-2xl border border-gray-100 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <h3 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-3">
+                <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
+                  <Edit3 className="w-6 h-6 text-white" />
+                </div>
+                Edit Grade
+              </h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Subject Name
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <input
+                    type="text"
+                    placeholder="e.g., Mathematics, English"
+                    value={newGrade.subject}
+                    onChange={(e) =>
+                      setNewGrade({ ...newGrade, subject: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Assessment Name
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <input
+                    type="text"
+                    placeholder="e.g., Midterm Exam, Assignment 1"
+                    value={newGrade.assessmentName}
+                    onChange={(e) =>
+                      setNewGrade({
+                        ...newGrade,
+                        assessmentName: e.target.value,
+                      })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Grade (%)
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <input
+                    type="number"
+                    placeholder="e.g., 85"
+                    min="0"
+                    max="100"
+                    value={newGrade.grade}
+                    onChange={(e) =>
+                      setNewGrade({ ...newGrade, grade: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Assessment Weighting (%)
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <input
+                    type="number"
+                    placeholder="e.g., 30"
+                    min="0"
+                    max="100"
+                    value={newGrade.weight}
+                    onChange={(e) =>
+                      setNewGrade({ ...newGrade, weight: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Academic Year
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <select
+                    value={newGrade.year}
+                    onChange={(e) =>
+                      setNewGrade({ ...newGrade, year: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  >
+                    {years.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Semester
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <select
+                    value={newGrade.semester}
+                    onChange={(e) =>
+                      setNewGrade({ ...newGrade, semester: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  >
+                    {semesters.map((sem) => (
+                      <option key={sem} value={sem}>
+                        Semester {sem}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Term
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <select
+                    value={newGrade.term}
+                    onChange={(e) =>
+                      setNewGrade({ ...newGrade, term: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  >
+                    {(termsBySemester[newGrade.semester] || []).map((term) => (
+                      <option key={term} value={term}>
+                        Term {term}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Assessment Date
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2"></p>
+                  <input
+                    type="date"
+                    value={newGrade.date}
+                    onChange={(e) =>
+                      setNewGrade({ ...newGrade, date: e.target.value })
+                    }
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-8 pt-6 border-t border-gray-200">
+                <button
+                  onClick={handleUpdateGrade}
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  <Edit3 className="w-5 h-5" />
+                  Update Grade
+                </button>
+                <button
+                  onClick={() => {
+                    setEditingGrade(null);
+                    setShowAddForm(false);
+                    setNewGrade({
+                      subject: "",
+                      assessmentName: "",
+                      grade: "",
+                      weight: "",
+                      year: "2024",
+                      semester: "1",
+                      term: "1",
+                      date: new Date().toISOString().split("T")[0],
+                    });
+                  }}
+                  className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      
       <footer className="text-center mt-12 p-4 text-sm text-gray-500">
         © {new Date().getFullYear()} Grade Calculator. Built by fu :)
       </footer>
-
     </div>
   );
 };
