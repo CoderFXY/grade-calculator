@@ -1,3 +1,5 @@
+//Version7 Grade Calculator fixed error when editing grade, (on second edit) total weighting was contacenated and weight before edit included new weight, and under 'Subject Averages' the total weight and average was wrong.
+
 import React, { useState, useEffect } from "react";
 import {
   Plus,

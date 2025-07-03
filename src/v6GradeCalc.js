@@ -1,3 +1,5 @@
+//Version6 Grade Calculator readded the 'Edit Grade' Modal after it was removed after v2
+
 import React, { useState, useEffect } from "react";
 import {
   Plus,
@@ -48,7 +50,7 @@ const GradeCalculator = () => {
         grade.year === year &&
         grade.id !== excludeId
       ) {
-        return sum + Number(grade.weight);
+        return sum + grade.weight;
       }
       return sum;
     }, 0);
@@ -115,7 +117,7 @@ const GradeCalculator = () => {
     ];
     setSubjects(sampleData);
   }, []);
-
+  
   const handleAddGrade = () => {
     if (
       newGrade.subject &&
@@ -175,29 +177,19 @@ const GradeCalculator = () => {
     const existingWeight = getTotalWeightForSubject(
       newGrade.subject,
       newGrade.year,
-      newGrade.semester,
-      newGrade.term,
       editingGrade.id
     );
   
     if (existingWeight + gradeWeight > 100) {
       alert(
-        `Total weight for ${newGrade.subject} in ${newGrade.year} cannot exceed 100%. 
-Current total without this assessment: ${existingWeight}%.`
+        `Total weight for ${newGrade.subject} in ${newGrade.year} cannot exceed 100%. Current total without this assessment: ${existingWeight}%.`
       );
       return;
     }
   
     setSubjects(
       subjects.map((s) =>
-        s.id === editingGrade.id 
-          ? { 
-              ...newGrade,
-              id: editingGrade.id,
-              grade: parseFloat(newGrade.grade),  
-              weight: parseFloat(newGrade.weight),
-            } 
-          : s
+        s.id === editingGrade.id ? { ...newGrade, id: editingGrade.id } : s
       )
     );
     setEditingGrade(null);
