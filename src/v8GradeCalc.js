@@ -1,3 +1,5 @@
+//Version8 Grade Calculator - added local storage and changed my name in the footer
+
 import React, { useState, useEffect } from "react";
 import {
   Plus,
